@@ -27,9 +27,12 @@ const ProductManagement = () => {
 
   const fetchProducts = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/products", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.get(
+        "https://test-26-may.onrender.com/api/products",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setProducts(res.data);
     } catch (err) {
       console.error("Failed to fetch products", err);
@@ -38,9 +41,12 @@ const ProductManagement = () => {
 
   const fetchEnterprises = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/enterprises", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.get(
+        "https://test-26-may.onrender.com/api/enterprises",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setEnterprises(res.data);
     } catch (err) {
       console.error("Failed to fetch enterprises", err);
@@ -49,9 +55,12 @@ const ProductManagement = () => {
 
   const fetchEmployees = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/employees", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.get(
+        "https://test-26-may.onrender.com/api/employees",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setEmployees(res.data);
     } catch (err) {
       console.error("Failed to fetch employees", err);
@@ -82,14 +91,18 @@ const ProductManagement = () => {
     try {
       if (editingId) {
         await axios.put(
-          `http://localhost:5000/api/products/${editingId}`,
+          `https://test-26-may.onrender.com/api/products/${editingId}`,
           payload,
           { headers: { Authorization: `Bearer ${token}` } }
         );
       } else {
-        await axios.post("http://localhost:5000/api/products", payload, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        await axios.post(
+          "https://test-26-may.onrender.com/api/products",
+          payload,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
       }
       setFormData(initialFormState);
       setEditingId(null);
@@ -113,11 +126,15 @@ const ProductManagement = () => {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this product?")) return;
+    if (!window.confirm("Are you sure you want to delete this product?"))
+      return;
     try {
-      await axios.delete(`http://localhost:5000/api/products/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await axios.delete(
+        `https://test-26-may.onrender.com/api/products/${id}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       fetchProducts();
     } catch (err) {
       console.error("Failed to delete product", err);
@@ -128,7 +145,10 @@ const ProductManagement = () => {
     <div className="p-6 max-w-4xl mx-auto">
       <h2 className="text-2xl font-semibold mb-6">Product Management</h2>
 
-      <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow mb-8">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white p-6 rounded shadow mb-8"
+      >
         <h3 className="text-lg font-bold mb-4">
           {editingId ? "Edit Product" : "Create New Product"}
         </h3>
@@ -195,7 +215,9 @@ const ProductManagement = () => {
         </div>
 
         <div className="mb-3">
-          <label className="block font-medium mb-1">Associate with Enterprise</label>
+          <label className="block font-medium mb-1">
+            Associate with Enterprise
+          </label>
           <select
             name="enterprise"
             value={formData.enterprise}
@@ -212,7 +234,9 @@ const ProductManagement = () => {
         </div>
 
         <div className="mb-4">
-          <label className="block font-medium mb-1">Associate with Employee</label>
+          <label className="block font-medium mb-1">
+            Associate with Employee
+          </label>
           <select
             name="employee"
             value={formData.employee}

@@ -16,9 +16,12 @@ const Users = () => {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/users", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.get(
+        "https://test-26-may.onrender.com/api/users",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setUsers(res.data);
     } catch (err) {
       console.error("Failed to fetch users", err);
@@ -27,9 +30,12 @@ const Users = () => {
 
   const fetchRoles = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/roles", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.get(
+        "https://test-26-may.onrender.com/api/roles",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setRoles(res.data);
     } catch (err) {
       console.error("Failed to fetch roles", err);
@@ -40,7 +46,7 @@ const Users = () => {
     e.preventDefault();
     try {
       await axios.post(
-        "http://localhost:5000/api/users",
+        "https://test-26-may.onrender.com/api/users",
         { ...formData },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -65,7 +71,7 @@ const Users = () => {
     e.preventDefault();
     try {
       await axios.put(
-        `http://localhost:5000/api/users/${editUserId}`,
+        `https://test-26-may.onrender.com/api/users/${editUserId}`,
         { ...formData },
         { headers: { Authorization: `Bearer ${token}` } }
       );

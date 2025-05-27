@@ -29,9 +29,12 @@ const Roles = () => {
 
   const fetchRoles = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/roles", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.get(
+        "https://test-26-may.onrender.com/api/roles",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setRoles(res.data);
     } catch (err) {
       console.error("Failed to fetch roles", err);
@@ -64,7 +67,7 @@ const Roles = () => {
     e.preventDefault();
     try {
       await axios.post(
-        "http://localhost:5000/api/roles",
+        "https://test-26-may.onrender.com/api/roles",
         { name, permissions },
         {
           headers: { Authorization: `Bearer ${token}` },
