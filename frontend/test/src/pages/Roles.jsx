@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { FaUserPlus } from "react-icons/fa";
 
 const MODULES = [
   "Enterprises",
@@ -24,7 +25,6 @@ const Roles = () => {
   const [roles, setRoles] = useState([]);
   const [name, setName] = useState("");
   const [permissions, setPermissions] = useState(defaultPermissions);
-
   const token = localStorage.getItem("token");
 
   const fetchRoles = async () => {
@@ -51,7 +51,6 @@ const Roles = () => {
           [permType]: !p.permissions[permType],
         };
 
-        // If unchecking read, reset all other permissions
         if (permType === "read" && !updatedPerms.read) {
           updatedPerms.create = false;
           updatedPerms.update = false;
@@ -87,16 +86,18 @@ const Roles = () => {
 
   return (
     <div className="p-6 text-black">
-      <h2 className="text-2xl font-semibold mb-4">Role Management</h2>
+      <h2 className="text-3xl font-bold mb-6 flex items-center gap-2">
+        <FaUserPlus className="text-[#912891]" /> Role Management
+      </h2>
 
       {/* Create Role Form */}
       <form
         onSubmit={handleCreateRole}
-        className="bg-white p-4 rounded shadow mb-6 max-w-3xl"
+        className="bg-white p-6 rounded shadow mb-6 max-w-4xl"
       >
         <h3 className="text-lg font-bold mb-4">Create New Role</h3>
 
-        <div className="mb-4">
+        <div className="mb-6">
           <label className="block text-sm font-medium mb-1">Role Name</label>
           <input
             type="text"
@@ -108,54 +109,56 @@ const Roles = () => {
           />
         </div>
 
-        <table className="min-w-full text-sm border mb-4">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="border p-2 text-left">Module</th>
-              <th className="border p-2">Access</th>
-            </tr>
-          </thead>
-          <tbody>
-            {permissions.map((p) => (
-              <tr key={p.module}>
-                <td className="border p-2">{p.module}</td>
+        {/* Permissions UI */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+          {permissions.map((p) => (
+            <div
+              key={p.module}
+              className="border rounded p-4 shadow-sm bg-gray-50"
+            >
+              <div className="flex flex-row items-center justify-between">
+                <h4 className="font-semibold text-gray-700 mb-3">{p.module}</h4>
 
-                {/* Read checkbox always visible */}
-                <td className="border p-2 text-center">
+                {/* Read Checkbox */}
+                <label className="flex items-center space-x-2 mb-2 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={p.permissions.read}
                     onChange={() => handleCheckboxChange(p.module, "read")}
+                    className="cursor-pointer"
                   />
-                </td>
+                </label>
+              </div>
 
-                {/* Conditionally render other checkboxes based on read permission */}
-                {["create", "update", "delete"].map((perm) => (
-                  <td className="border p-2 text-center hidden" key={perm}>
-                    {p.permissions.read ? (
+              {/* Sub-permissions shown only if Read is checked */}
+              {p.permissions.read && (
+                <div className="ml-4 space-y-2">
+                  {["create", "update", "delete"].map((perm) => (
+                    <label key={perm} className="flex items-center space-x-2">
                       <input
                         type="checkbox"
                         checked={p.permissions[perm]}
                         onChange={() => handleCheckboxChange(p.module, perm)}
                       />
-                    ) : null}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                      <span className="capitalize">{perm}</span>
+                    </label>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
 
         <button
           type="submit"
-          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+          className="bg-[#912891] text-white px-4 py-2 rounded hover:bg-green--700 transition"
         >
           Create Role
         </button>
       </form>
 
-      {/* Role List */}
-      <div className="max-w-3xl">
+      {/* Existing Roles */}
+      <div className="max-w-4xl">
         <h3 className="text-lg font-semibold mb-3">Existing Roles</h3>
         <table className="min-w-full border text-sm">
           <thead className="bg-gray-100">
@@ -168,8 +171,11 @@ const Roles = () => {
             {roles.map((role) => (
               <tr key={role._id}>
                 <td className="border p-2 font-medium">{role.name}</td>
-                <td className="border p-2 whitespace-pre-wrap">
-                  {role.permissions.map((perm) => perm.module).join(", ")}
+                <td className="border p-2 whitespace-pre-wrap text-gray-700">
+                  {role.permissions
+                    .filter((perm) => perm.permissions.read)
+                    .map((perm) => perm.module)
+                    .join(", ")}
                 </td>
               </tr>
             ))}
