@@ -9,7 +9,7 @@ import Enterprises from "./pages/Enterprises";
 import LoginPage from "./Components/Auth/LoginPage";
 import Employees from "./pages/Employees";
 import ProductManagement from "./pages/ProductManagement";
-import AdminLayout from "./Components/layout/AdminLayout";
+import AdminLayout from "./Components/Auth/AdminLayout";
 
 function App() {
   return (
