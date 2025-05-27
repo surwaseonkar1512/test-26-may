@@ -1,4 +1,3 @@
-// src/components/Layout/AdminLayout.jsx
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
 import { hasAccess } from "../../../utils/permissionUtils"; // Adjust path as needed
