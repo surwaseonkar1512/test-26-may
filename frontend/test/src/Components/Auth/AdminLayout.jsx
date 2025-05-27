@@ -107,7 +107,7 @@ function AdminLayout() {
       </aside>
 
       {/* Main content */}
-      <main className="flex-1 p-6 bg-gray-100 overflow-auto w-full md:ml-64">
+      <main className="flex-1 p-6 bg-gray-100 overflow-auto w-full ">
         <Outlet />
       </main>
     </div>
